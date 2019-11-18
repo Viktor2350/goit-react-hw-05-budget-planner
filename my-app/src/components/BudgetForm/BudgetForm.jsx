@@ -7,7 +7,7 @@ import Button from '../shared/Button';
 import { labelStyles } from '../Styles/Styles';
 
 export default class BudgetForm extends Component {
-  state = { budget: 0 };
+  state = { budget: '' };
 
   handleChange = e => {
     this.setState({
@@ -17,8 +17,14 @@ export default class BudgetForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSave(Number(this.state.budget));
-    this.setState({ budget: 0 });
+
+    if (this.state.budget <= 0) {
+      alert('Введите коректную сумму');
+    } else {
+      this.props.onSave(Number(this.state.budget));
+    }
+
+    this.setState({ budget: '' });
   };
 
   render() {

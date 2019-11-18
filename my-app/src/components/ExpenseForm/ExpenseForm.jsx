@@ -10,7 +10,7 @@ import { labelStyles } from '../Styles/Styles';
 export default class ExpenseForm extends Component {
   state = {
     name: '',
-    amount: 0,
+    amount: '',
   };
 
   handleChange = e => {
@@ -23,15 +23,19 @@ export default class ExpenseForm extends Component {
     e.preventDefault();
     const { name, amount } = this.state;
 
-    const expense = {
-      id: shortid.generate(),
-      name,
-      amount: Number(amount),
-    };
+    if (name === '' || amount <= 0) {
+      alert('Введите коректное название или число');
+    } else {
+      const expense = {
+        id: shortid.generate(),
+        name,
+        amount: Number(amount),
+      };
 
-    this.props.onSave(expense);
+      this.props.onSave(expense);
+    }
 
-    this.setState({ name: '', amount: 0 });
+    this.setState({ name: '', amount: '' });
   };
 
   render() {
